@@ -7,7 +7,6 @@ pub fn all_routes(cfg: &mut web::ServiceConfig) {
 }
 
 pub fn restaurant_routes(cfg: &mut web::ServiceConfig) {
-    println!("called route");
     cfg.service(
         web::scope("/register")
         .route("/", web::post().to(register_restaurant))
@@ -18,6 +17,13 @@ pub fn restaurant_routes(cfg: &mut web::ServiceConfig) {
         .route("/", web::post().to(add_mennu_items))
         .route("/get", web::get().to(get_menu_items))
         .route("/get/{category}", web::get().to(get_menu_category_items))
+    );
+
+    cfg.service(
+        web::scope("/order")
+        .route("/", web::post().to(add_order))
+        .route("/get", web::get().to(all_orders))
+        .route("/get/{user_id}", web::get().to(user_order))
     );
 
     // cfg.route("/order", web::post().to(place_order));
